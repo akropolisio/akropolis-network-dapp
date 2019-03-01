@@ -2,8 +2,8 @@
 declare module 'drizzle' {
   import Web3 from 'web3';
   import { Store } from 'redux';
-  import Contract from 'web3/eth/contract';
-  import { ABIDefinition } from 'web3/eth/abi';
+  import { AbiDefinition } from 'ethereum-protocol';
+  import { Contract } from 'web3-eth-contract/types';
 
   export interface DrizzleState {
     accountBalances: Record<AccountAddress, string>;
@@ -32,7 +32,7 @@ declare module 'drizzle' {
 
   export interface IContract {
     contractName: string;
-    abi?: ABIDefinition[];
+    abi?: AbiDefinition[];
     web3Contract?: Contract;
     networks?: Record<string, {
       address: string;

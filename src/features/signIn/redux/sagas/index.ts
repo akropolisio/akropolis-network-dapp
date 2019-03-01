@@ -3,7 +3,6 @@ import { SagaIterator } from 'redux-saga';
 import Web3 from 'web3';
 import * as sigUtil from 'eth-sig-util';
 import { PromisedReturnType } from '_helpers';
-import { JsonRPCResponse } from 'web3/providers';
 
 import { storageKeys } from 'services/storage';
 import { actions as userAction } from 'services/user';
@@ -45,7 +44,7 @@ async function signMsg(web3: Web3, from: string): Promise<{ signed: boolean, res
     (web3.currentProvider as any).sendAsync({
       method: 'personal_sign',
       params: [msg, from],
-    }, (err: Error | null, result: JsonRPCResponse) => {
+    }, (err: Error | null, result: any) => {
       if (err) { return reject(err); }
       if (result.error) {
         return reject(result.error);

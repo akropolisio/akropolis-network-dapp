@@ -3,6 +3,9 @@
 interface Window {
   __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?(): any;
   __data: any; // initial redux state, maybe undefined
+  __CIPHER__: any;
+  ethereum: any;
+  web3: any;
 }
 
 declare var __DISABLE_SSR__: boolean;
@@ -43,3 +46,6 @@ declare module 'react-jss-hmr/webpack';
 declare module 'circular-dependency-plugin';
 declare module 'filemanager-webpack-plugin';
 declare module 'react-minimal-pie-chart';
+declare module 'eth-provider';
+declare module 'resolve-pathname';
+declare module 'lodash.throttle';

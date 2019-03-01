@@ -16,7 +16,7 @@ import * as autoprefixer from 'autoprefixer';
 import * as stylelint from 'stylelint';
 import * as doiuse from 'doiuse';
 
-import { ROUTES_PREFIX } from '../src/core/constants';
+import { ROUTES_PREFIX } from '../src/core/constants/common';
 import getEnvParams from '../src/core/getEnvParams';
 import { LANGUAGES } from '../src/services/i18n/constants';
 

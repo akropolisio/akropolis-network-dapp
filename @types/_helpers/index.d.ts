@@ -70,6 +70,8 @@ declare module '_helpers' {
   // tslint:disable-next-line:ban-types
   export type RequiredProps<T, K extends Extract<keyof T, string>> = Required<Pick<T, K>> & Omit<T, K>;
 
+  export type NonNullableProps<T, K extends Extract<keyof T, string>> = Omit<T, K> & { [key in K]: NonNullable<T[key]> }
+
   export type DeepPartial<T> =
     T extends any[] ? IDeepPartialArray<T[number]> :
     T extends object ? DeepPartialObject<T> :
