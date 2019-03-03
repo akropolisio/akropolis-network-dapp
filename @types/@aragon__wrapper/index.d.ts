@@ -49,6 +49,7 @@ declare module '@aragon/wrapper' {
 
     public connectAppIFrame(iframeElt: HTMLFrameElement, proxyAddress: string): { shutdown: Subscription };
     public cancel(): void;
+    public setAccounts(accounts: string[]): void;
 
     public runApp(provider: MessagePortMessageProvider, proxyAddress: string): { shutdown: Subscription };
     public init(options: {

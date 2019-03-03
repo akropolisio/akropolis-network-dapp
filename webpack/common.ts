@@ -4,13 +4,13 @@ import * as HtmlWebpackPlugin from 'html-webpack-plugin';
 import * as CleanWebpackPlugin from 'clean-webpack-plugin';
 import * as MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
-import * as ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
+// import * as ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
 import * as FaviconsWebpackPlugin from 'favicons-webpack-plugin';
 import * as CircularDependencyPlugin from 'circular-dependency-plugin';
 import * as ReactJssHmrPlugin from 'react-jss-hmr/webpack';
 import * as FileManagerWebpackPlugin from 'filemanager-webpack-plugin';
 
-import * as threadLoader from 'thread-loader';
+// import * as threadLoader from 'thread-loader';
 import * as postcssSCSS from 'postcss-scss';
 import * as autoprefixer from 'autoprefixer';
 import * as stylelint from 'stylelint';
@@ -18,23 +18,24 @@ import * as doiuse from 'doiuse';
 
 import { ROUTES_PREFIX } from '../src/core/constants/common';
 import getEnvParams from '../src/core/getEnvParams';
-import { LANGUAGES } from '../src/services/i18n/constants';
+// import { LANGUAGES } from '../src/services/i18n/constants';
+const LANGUAGES = ['en', 'ru'];
 
 export type BuildType = 'dev' | 'prod' | 'server';
 
-const { chunkHash, withAnalyze, chunkName, withHot, withoutTypeChecking, isWatchMode, forGhPages } = getEnvParams();
+const { chunkHash, withAnalyze, chunkName, withHot, withoutTypeChecking, forGhPages } = getEnvParams();
 
-const workerPool = {
-  workers: require('os').cpus().length - 1,
-  poolTimeout: withHot ? Infinity : 2000,
-};
+// const workerPool = {
+//   workers: require('os').cpus().length - 1,
+//   poolTimeout: withHot ? Infinity : 2000,
+// };
 
-isWatchMode && threadLoader.warmup(workerPool, [
-  'babel-loader',
-  'ts-loader',
-  'postcss-loader',
-  'sass-loader',
-]);
+// isWatchMode && threadLoader.warmup(workerPool, [
+//   'babel-loader',
+//   'ts-loader',
+//   'postcss-loader',
+//   'sass-loader',
+// ]);
 
 export const getCommonPlugins: (type: BuildType) => webpack.Plugin[] = (type) => [
   new CleanWebpackPlugin(['build', 'static'], { root: path.resolve(__dirname, '..') }),
@@ -79,17 +80,17 @@ export const getCommonPlugins: (type: BuildType) => webpack.Plugin[] = (type) =>
       ],
     },
   }) : [])
-  .concat(isWatchMode && !withoutTypeChecking ? (
-    new ForkTsCheckerWebpackPlugin({
-      checkSyntacticErrors: true,
-      async: false,
-      tsconfig: path.resolve(__dirname, '..', 'tsconfig.json'),
-      tslint: path.resolve(__dirname, '..', 'tslint.json'),
-      reportFiles: [
-        '**',
-        '!**/*.json',
-      ],
-    })) : [])
+  // .concat(isWatchMode && !withoutTypeChecking ? (
+  //   new ForkTsCheckerWebpackPlugin({
+  //     checkSyntacticErrors: true,
+  //     async: false,
+  //     tsconfig: path.resolve(__dirname, '..', 'tsconfig.json'),
+  //     tslint: path.resolve(__dirname, '..', 'tslint.json'),
+  //     reportFiles: [
+  //       '**',
+  //       '!**/*.json',
+  //     ],
+  //   })) : [])
   .concat(withAnalyze ? (
     new BundleAnalyzerPlugin()
   ) : [])
@@ -121,10 +122,10 @@ export const getCommonRules: (type: BuildType) => webpack.Rule[] = (type) => [
   {
     test: /\.tsx?$/,
     use: ([] as webpack.Loader[])
-      .concat(isWatchMode ? {
-        loader: 'thread-loader',
-        options: workerPool,
-      } : [])
+      // .concat(isWatchMode ? {
+      //   loader: 'thread-loader',
+      //   options: workerPool,
+      // } : [])
       .concat(withHot && type === 'dev' ? {
         loader: 'babel-loader',
         options: {
@@ -139,8 +140,8 @@ export const getCommonRules: (type: BuildType) => webpack.Rule[] = (type) => [
       .concat({
         loader: 'ts-loader',
         options: {
-          transpileOnly: isWatchMode,
-          happyPackMode: isWatchMode,
+          transpileOnly: withoutTypeChecking,
+          // happyPackMode: isWatchMode,
           logLevel: 'error',
         },
       }),
@@ -228,7 +229,7 @@ export const commonConfig: webpack.Configuration = {
   },
   resolve: {
     modules: ['node_modules', 'src', path.resolve('ethereum-contracts', 'build')],
-    extensions: ['.js', '.jsx', '.ts', '.tsx'],
+    extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
     plugins: withHot ? [
       new ReactJssHmrPlugin(),
     ] : undefined,

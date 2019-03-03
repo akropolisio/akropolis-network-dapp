@@ -1,5 +1,4 @@
 import BN from 'bn.js';
-import Web3 from 'web3';
 import { Subscription } from 'rxjs';
 import { NonNullableProps } from '_helpers';
 import throttle from 'lodash.throttle';
@@ -155,7 +154,8 @@ export const pollMainAccount = pollEvery<[Provider, IPollMainAccountHandlers], I
         if (!account) {
           return { account: null, balance: getUnknownBalance() };
         }
-        const balance = await web3.eth.getBalance(account);
+        // TODO ds: remove type crutch after web3 updating
+        const balance = await web3.eth.getBalance(account) as any as string;
         return { account, balance: new BN(filterBalanceValue(balance)) };
       },
       onResult: ({ account, balance }) => {
@@ -180,7 +180,8 @@ export const pollConnectivity = pollEvery<[Provider[], (isConnected: boolean) =>
       request: async () => {
         try {
           await Promise.all(
-            checkedProviders.map(p => getWeb3(p).eth.net.getNetworkType()),
+            // TODO ds: remove 'as any' after web3 update
+            checkedProviders.map(p => (getWeb3(p).eth.net as any).getNetworkType()),
           );
           return true;
         } catch (err) {
@@ -204,7 +205,7 @@ export const pollNetwork = pollEvery<[Provider, (network: string) => void], stri
   const web3 = getWeb3(provider);
   let lastFound: string | null = null;
   return {
-    request: () => web3.eth.net.getNetworkType(),
+    request: () => (web3.eth.net as any).getNetworkType(), // TODO ds: remove 'as any' after web3 update
     onResult: network => {
       if (network !== lastFound) {
         lastFound = network;
@@ -217,7 +218,7 @@ export const pollNetwork = pollEvery<[Provider, (network: string) => void], stri
 interface ISubscribeWrapperHandlers {
   onApps(apps: IFrontendAragonApp[]): void;
   onPermissions(perms: IAragonPermissions): void;
-  onForwarders(apps: IFrontendAragonApp[]): void;
+  onForwarders(apps: IAragonApp[]): void;
   onTransaction(transactionsBag: ITransactionsBag): void;
 }
 
@@ -325,34 +326,29 @@ const resolveEnsDomain: typeof ensResolve = async (domain, opts) => {
 };
 
 interface IInitWrapperOptions {
-  provider: Provider;
-  walletProvider?: Provider | null;
-  ipfsConf: IpfsConfig;
   onError?(error: any): void;
-  onApps?(): void;
+  onApps?(apps: IFrontendAragonApp[]): void;
   onPermissions?(perms: IAragonPermissions): void;
-  onForwarders?(apps: IFrontendAragonApp[]): void;
-  onTransaction?(transactionsBag: ITransactionsBag): void;
+  onForwarders?(apps: IAragonApp[]): void;
+  onTransactionBag?(transactionBag: ITransactionsBag): void;
   onDaoAddress?(dao: { address: string, domain: string }): void;
-  onWeb3?(web3: Web3): void;
 }
 
 const initWrapper = async (
   dao: string,
-  ensRegistryAddress: string,
   {
-    provider,
-    walletProvider = null,
-    ipfsConf = NETWORK_CONFIG.defaultIpfsConfig,
-    onError = noop,
     onApps = noop,
     onPermissions = noop,
     onForwarders = noop,
-    onTransaction = noop,
+    onTransactionBag: onTransaction = noop,
     onDaoAddress = noop,
-    onWeb3 = noop,
   }: IInitWrapperOptions,
-) => {
+): Promise<AragonWrapper> => {
+  const ensRegistryAddress = NETWORK_CONFIG.aragonEnsRegistry;
+  const ipfsConf = NETWORK_CONFIG.defaultIpfsConfig;
+  const provider = web3Providers.default;
+  const walletProvider = web3Providers.wallet;
+
   const isDomain = isValidEnsName(dao);
   const daoAddress = isDomain
     ? await resolveEnsDomain(dao, {
@@ -377,7 +373,6 @@ const initWrapper = async (
   });
 
   const web3 = getWeb3(walletProvider || provider);
-  onWeb3(web3);
 
   const account = await getMainAccount(web3);
   try {
@@ -391,14 +386,8 @@ const initWrapper = async (
       throw new DAONotFound(dao);
     }
     if (err.message === 'connection not open') {
-      onError(
-        new NoConnection(
-          'The wrapper can not be initialized without a connection',
-        ),
-      );
-      return;
+      throw new NoConnection('The wrapper can not be initialized without a connection');
     }
-
     throw err;
   }
 

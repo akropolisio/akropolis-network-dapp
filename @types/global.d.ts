@@ -49,3 +49,5 @@ declare module 'react-minimal-pie-chart';
 declare module 'eth-provider';
 declare module 'resolve-pathname';
 declare module 'lodash.throttle';
+
+declare module 'web3-utils'; // TODO ds: Remove after web3-utils updating

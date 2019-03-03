@@ -56,7 +56,7 @@ import Web3 from 'web3';
 import BN from 'bn.js';
 import { InvalidNetworkType, InvalidURI, NoConnection } from './errors';
 import { isElectron } from './utils';
-import { HttpProvider } from 'web3-providers/types';
+import { HttpProvider } from 'web3/types';
 
 const EMPTY_ADDRESS = '0x0000000000000000000000000000000000000000';
 
@@ -91,9 +91,10 @@ export async function checkValidEthNode(uri: string, expectedNetworkType: string
 
   try {
     const web3 = new Web3(uri);
-    const connectedNetworkType = await web3.eth.net.getNetworkType();
+    // TODO ds: remove 'as any' after web3 updating
+    const connectedNetworkType = await (web3.eth.net as any).getNetworkType();
     if (((provider: any): provider is HttpProvider => provider.disconnect)(web3.currentProvider)) {
-      web3.currentProvider.disconnect();
+      (web3.currentProvider as any).disconnect(); // TODO ds: remove 'as any' after web3 updating
     } else {
       // Older versions of web3's providers didn't expose a generic interface for disconnecting
       (web3.currentProvider as any).connection.close();

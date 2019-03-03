@@ -55,12 +55,14 @@ function SellButton(props: IProps) {
     props.selling.isRequesting,
     (prev, cur) => prev && !cur,
     () => setIsOpenSellModal(false),
+    [props.selling.isRequesting],
   );
 
   useOnChangeState(
     isLoadingRecommendedPrice,
     (prev, cur) => prev && !cur,
     () => !!recommendedPrice && setPrice(recommendedPrice.avg.toNumber()),
+    [isLoadingRecommendedPrice],
   );
 
   return (

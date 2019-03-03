@@ -31,7 +31,8 @@
     "strictFunctionTypes": false,
     "strictBindCallApply": true,
     "sourceMap": true,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "skipLibCheck": true
   },
   "include": [
     "src/**/*",

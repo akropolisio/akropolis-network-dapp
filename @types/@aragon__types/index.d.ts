@@ -109,13 +109,14 @@ declare module '@aragon/types' {
   }
 
   type Address = string;
+  type PermissionRole = string;
 
   export type IAragonPermissions = {
     [A in Address] : {
-      [Something: string]: {
+      [R in PermissionRole]: {
         manager: Address;
         allowedEntities: Address[];
-      },
+      };
     }
   };
 
