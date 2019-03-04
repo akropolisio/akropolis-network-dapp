@@ -8,18 +8,16 @@ import { provideStyles, StylesProps } from './PageNotFound.style';
 
 type IProps = StylesProps & ITranslateProps & InjectedAuthRouterProps;
 
-class PageNotFound extends React.PureComponent<IProps> {
-  public render() {
-    const { classes, t } = this.props;
-    return (
-      <BaseLayout fullHeight>
-        <div className={classes.root}>
-          <div className={classes.title}>404.</div>
-          <div className={classes.description}>{t(tKeys.shared.pageNotFound.getKey())}</div>
-        </div>
-      </BaseLayout>
-    );
-  }
+function PageNotFound(props: IProps) {
+  const { classes, t } = props;
+  return (
+    <BaseLayout fullHeight>
+      <div className={classes.root}>
+        <div className={classes.title}>404.</div>
+        <div className={classes.description}>{t(tKeys.shared.pageNotFound.getKey())}</div>
+      </div>
+    </BaseLayout>
+  );
 }
 
 export { IProps };

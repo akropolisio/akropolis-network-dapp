@@ -6,6 +6,10 @@ const rawTree = {
     type: getParam(null),
   },
   create: null,
+  daoName: getParam({
+    home: null,
+    appAddress: getParam(null),
+  }),
 };
 
 const routes = build(rawTree);
