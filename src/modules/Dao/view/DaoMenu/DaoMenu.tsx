@@ -28,6 +28,7 @@ function DaoMenu(props: IProps & StylesProps) {
     staticAragonApps.home,
     ...apps.filter(app => app.hasWebApp).map<IStaticAragonApp>(app => ({
       icon: getAppIcon(app),
+      content: () => <noscript />,
       name: app.name,
       routeKey: app.proxyAddress,
     })),
@@ -38,7 +39,7 @@ function DaoMenu(props: IProps & StylesProps) {
       {items.map(item => (
         <MenuNavLink
           key={item.routeKey}
-          to={routes.daoName.appAddress.getRedirectPath({ daoName, appAddress: item.routeKey })}
+          to={routes.daoName.appName.getRedirectPath({ daoName, appName: item.routeKey })}
           className={classes.menuItem}
           activeClassName={classes.active}
         >

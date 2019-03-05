@@ -8,7 +8,7 @@ import createDecorator from 'final-form-calculate';
 import { BigNumber } from '0x.js';
 import * as uuid from 'uuid';
 
-import { i18nConnect, ITranslateProps, tKeys as allKeys, ITranslateKey } from 'services/i18n';
+import { i18nConnect, ITranslateProps, tKeys as allKeys, TranslateKey } from 'services/i18n';
 import { actions as transactionActions, TransactionListener } from 'services/transactions';
 import {
   lessThenOrEqual, moreThenOrEqual, moreThen, isRequired, notDefault, maxStringLength, allowedCharactersForCashFlowName,
@@ -72,7 +72,7 @@ const names: { [key in keyof IFormData]: key } = {
   periodicity: 'periodicity',
 };
 
-function validateForm(values: IFormData): Partial<MarkAs<ITranslateKey, IFormData>> {
+function validateForm(values: IFormData): Partial<MarkAs<TranslateKey, IFormData>> {
   return {
     name: (
       isRequired(values.name) ||

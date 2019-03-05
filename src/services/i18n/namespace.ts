@@ -13,14 +13,14 @@ interface IPhraseWithOptions {
   params: Record<string, string | number>;
 }
 
-export type ITranslateFunction = Polyglot['t'] & CustomTranslateFunction;
-export type ITranslateKey = string | IPhraseWithOptions;
+export type TranslateFunction = Polyglot['t'] & CustomTranslateFunction;
+export type TranslateKey = string | IPhraseWithOptions;
 
 export type Lang = 'en' | 'ru';
 
 export interface ITranslateProps {
   locale: Lang;
-  t: ITranslateFunction;
+  t: TranslateFunction;
 }
 
 export type IChangeLanguage = IAction<'I18N_SERVICE:CHANGE_LANGUAGE', Lang>;

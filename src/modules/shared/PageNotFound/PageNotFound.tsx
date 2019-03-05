@@ -1,24 +1,19 @@
 import * as React from 'react';
 
-import { i18nConnect, ITranslateProps, tKeys } from 'services/i18n';
 import { InjectedAuthRouterProps } from 'shared/helpers/authWrapper';
+import { NotFound } from 'shared/view/components';
 
 import BaseLayout from '../BaseLayout/BaseLayout';
-import { provideStyles, StylesProps } from './PageNotFound.style';
 
-type IProps = StylesProps & ITranslateProps & InjectedAuthRouterProps;
+type IProps = InjectedAuthRouterProps;
 
-function PageNotFound(props: IProps) {
-  const { classes, t } = props;
+function PageNotFound(_props: IProps) {
   return (
     <BaseLayout fullHeight>
-      <div className={classes.root}>
-        <div className={classes.title}>404.</div>
-        <div className={classes.description}>{t(tKeys.shared.pageNotFound.getKey())}</div>
-      </div>
+      <NotFound />
     </BaseLayout>
   );
 }
 
 export { IProps };
-export default i18nConnect(provideStyles(PageNotFound));
+export default PageNotFound;

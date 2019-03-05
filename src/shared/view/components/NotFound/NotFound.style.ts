@@ -2,10 +2,10 @@ import { withStyles, Theme, WithStyles } from 'shared/styles';
 import { rule, hexToRGBA } from 'shared/helpers/style';
 
 const styles = ({ extra: theme }: Theme) => ({
-
   root: rule({
     height: '100%',
     display: 'flex',
+    flexGrow: 1,
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
@@ -24,7 +24,6 @@ const styles = ({ extra: theme }: Theme) => ({
     fontFamily: theme.typography.primaryFont,
     color: theme.colors.black,
   }),
-
 });
 
 export const provideStyles = withStyles(styles);

@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { i18nConnect, ITranslateProps, tKeys as allKeys, ITranslateFunction } from 'services/i18n';
+import { i18nConnect, ITranslateProps, tKeys as allKeys, TranslateFunction } from 'services/i18n';
 import { MenuItem } from 'shared/view/elements';
 import { TextInputField, NumberInputField, SliderField, SliderSelectField } from 'shared/view/form';
 import { formatSliderLabelDefault, formatPercent } from 'shared/helpers/format';
@@ -13,7 +13,7 @@ const tKeys = allKeys.features.createCashFlow.form;
 
 type IProps = StylesProps & ITranslateProps;
 
-const getFieldProps = (field: keyof IFormData, t: ITranslateFunction) => ({
+const getFieldProps = (field: keyof IFormData, t: TranslateFunction) => ({
   required: true,
   fullWidth: true,
   name: fieldNames[field],

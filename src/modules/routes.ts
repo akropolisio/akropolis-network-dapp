@@ -8,7 +8,7 @@ const rawTree = {
   create: null,
   daoName: getParam({
     home: null,
-    appAddress: getParam(null),
+    appName: getParam(null),
   }),
 };
 

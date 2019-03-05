@@ -8,8 +8,11 @@ export type TimePeriod = 'day' | 'week' | 'month' | 'quarter' | 'year';
 export type ID = number;
 export type UUID = string;
 
+export type StaticAragonAppType = 'home';
+
 export interface IStaticAragonApp {
   routeKey: string;
+  content: React.ComponentType;
   name: string;
   icon: JSX.Element | string;
 }

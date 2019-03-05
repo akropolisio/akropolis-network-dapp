@@ -12,15 +12,15 @@ const MarketplaceModule: IModule = {
       (
         <Route exact key="redirect-to-default-dao-app" path={routes.daoName.getRoutePath()}>
           {({ match: { params: { daoName } } }: RouteComponentProps<{ daoName: string }>) => (
-            <Redirect to={routes.daoName.appAddress.getRedirectPath({ daoName, appAddress: 'home' })} />
+            <Redirect to={routes.daoName.appName.getRedirectPath({ daoName, appName: 'home' })} />
           )}
         </Route>
       ),
-      <Route key="dao" path={routes.daoName.appAddress.getRoutePath()} component={DaoMain} />,
+      <Route key="dao" path={routes.daoName.appName.getRoutePath()} component={DaoMain} />,
       (
         <Redirect
           key="default-redirect"
-          to={routes.daoName.appAddress.getRedirectPath({ daoName: 'main', appAddress: 'home' })}
+          to={routes.daoName.appName.getRedirectPath({ daoName: 'main', appName: 'home' })}
         />
       ),
     ];

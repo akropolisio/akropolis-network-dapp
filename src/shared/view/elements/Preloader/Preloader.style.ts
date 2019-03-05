@@ -3,14 +3,20 @@ import { rule } from 'shared/helpers/style';
 
 const styles = ({ extra: theme }: Theme) => ({
   root: rule({
-    position: 'fixed',
-    zIndex: theme.zIndex.modal + 1,
-    left: 0,
-    right: 0,
-    top: 0,
-    bottom: 0,
+    height: '100%',
+    width: '100%',
+    flexGrow: 1,
     display: 'flex',
     backgroundColor: theme.palette.control.bg.overlay,
+
+    '&$isGlobal': rule({
+      position: 'fixed',
+      zIndex: theme.zIndex.modal + 1,
+      left: 0,
+      right: 0,
+      top: 0,
+      bottom: 0,
+    }),
   }),
 
   content: rule({
@@ -71,6 +77,8 @@ const styles = ({ extra: theme }: Theme) => ({
 
     '100%': {},
   }),
+
+  isGlobal: {},
 });
 
 export const provideStyles = withStyles(styles);

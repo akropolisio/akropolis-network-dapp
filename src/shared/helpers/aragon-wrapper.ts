@@ -397,7 +397,7 @@ const initWrapper = async (
     { ipfsConf },
   );
 
-  wrapper.connectAppIFrame = (iframeElt: HTMLFrameElement, proxyAddress: string) => {
+  wrapper.connectAppIFrame = (iframeElt: HTMLIFrameElement, proxyAddress: string) => {
     const windowMessageProvider = new providers.WindowMessage(iframeElt.contentWindow);
     const result = wrapper.runApp(windowMessageProvider, proxyAddress);
     if (subscriptions.connectedApp) {

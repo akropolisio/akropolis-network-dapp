@@ -1,11 +1,14 @@
 import * as React from 'react';
 import { HomeOutlinedIcon } from 'shared/view/elements/Icons';
-import { IStaticAragonApp } from 'shared/types/models';
+import { IStaticAragonApp, StaticAragonAppType } from 'shared/types/models';
 
-export const staticAragonApps = (<T extends Record<string, IStaticAragonApp>>(input: T): T => input)({
+type StaticApps = Record<StaticAragonAppType, IStaticAragonApp> & Record<string, IStaticAragonApp | undefined>;
+
+export const staticAragonApps: StaticApps = {
   home: {
     icon: <HomeOutlinedIcon />,
+    content: () => <div>Home App is coming soon</div>,
     name: 'Home',
     routeKey: 'home',
   },
-});
+};

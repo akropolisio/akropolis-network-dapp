@@ -1,7 +1,7 @@
 import { isEthereumAddress } from './isEthereumAddress';
-import { ITranslateKey, tKeys } from 'services/i18n';
+import { TranslateKey, tKeys } from 'services/i18n';
 
-function validate(value: string): ITranslateKey | undefined {
+function validate(value: string): TranslateKey | undefined {
   return isEthereumAddress(value) ? undefined : tKeys.shared.validation.invalidWalletAddress.getKey();
 }
 

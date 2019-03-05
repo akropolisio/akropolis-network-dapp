@@ -30,5 +30,5 @@ export { default as ListItemText } from '@material-ui/core/ListItemText';
 export { default as DonutChart } from './DonutChart/DonutChart';
 export { default as Drawer } from './Drawer/Drawer';
 export { default as Switch } from './Switch/Switch';
-export { default as GlobalLoader } from './GlobalLoader/GlobalLoader';
+export { default as Preloader } from './Preloader/Preloader';
 export { default as StarsRating } from './StarsRating/StarsRating';

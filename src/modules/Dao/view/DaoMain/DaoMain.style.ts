@@ -4,11 +4,14 @@ import { rule, hexToRGBA } from 'shared/helpers/style';
 const styles = ({ extra: theme }: Theme) => ({
   root: rule({
     display: 'flex',
+    flexGrow: 1,
   }),
   menu: rule({
+    zIndex: 1,
     boxShadow: '4px 0px 2px -2px rgba(224, 224, 224, 0.5)',
   }),
   content: rule({
+    display: 'flex',
     flexGrow: 1,
   }),
 

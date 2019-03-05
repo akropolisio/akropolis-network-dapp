@@ -1,5 +1,5 @@
-import { tKeys, ITranslateKey } from 'services/i18n';
+import { tKeys, TranslateKey } from 'services/i18n';
 
-export function notDefault<T>(defaultValue: T, currentValue: T): ITranslateKey | undefined {
+export function notDefault<T>(defaultValue: T, currentValue: T): TranslateKey | undefined {
   return defaultValue !== currentValue ? undefined : tKeys.shared.validation.notDefault.getKey();
 }

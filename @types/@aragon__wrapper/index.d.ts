@@ -47,7 +47,7 @@ declare module '@aragon/wrapper' {
 
     constructor(daoAddress: string, options: IAragonWrapperOptions)
 
-    public connectAppIFrame(iframeElt: HTMLFrameElement, proxyAddress: string): { shutdown: Subscription };
+    public connectAppIFrame(iframeElt: HTMLIFrameElement, proxyAddress: string): { shutdown: Subscription };
     public cancel(): void;
     public setAccounts(accounts: string[]): void;
 

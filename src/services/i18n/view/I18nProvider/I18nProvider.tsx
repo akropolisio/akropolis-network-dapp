@@ -6,7 +6,7 @@ import * as Polyglot from 'node-polyglot';
 import { IAppReduxState } from 'shared/types/app';
 import { withProps } from 'shared/helpers/react';
 
-import { ITranslateFunction, Lang, ITranslateKey } from '../../namespace';
+import { TranslateFunction, Lang, TranslateKey } from '../../namespace';
 import * as selectors from '../../redux/selectors';
 import { DEFAULT_LANGUAGE, TContext } from '../../constants';
 import { phrasesByLocale as phrases } from '../../locales';
@@ -44,8 +44,8 @@ class I18nProvider extends React.Component<IProps> {
   }
 }
 
-function makeTranslator(polyglot: Polyglot): ITranslateFunction {
-  return (phrase: ITranslateKey, smartCountOrInterpolationOptions?: number | Polyglot.InterpolationOptions) => {
+function makeTranslator(polyglot: Polyglot): TranslateFunction {
+  return (phrase: TranslateKey, smartCountOrInterpolationOptions?: number | Polyglot.InterpolationOptions) => {
     if (typeof phrase === 'string') {
       return polyglot.t(phrase, smartCountOrInterpolationOptions as any);
     }
