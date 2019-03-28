@@ -4,7 +4,7 @@ import { NonNullableProps } from '_helpers';
 import throttle from 'lodash.throttle';
 import resolvePathname from 'resolve-pathname';
 import AragonWrapper, { providers, isNameUsed, ensResolve, IpfsConfig } from '@aragon/wrapper';
-import { IFrontendAragonApp, IAragonApp, IAragonPermissions, ITransactionBag as ITransactionsBag } from '@aragon/types';
+import { IFrontendAragonApp, IAragonApp, IAragonPermissions, ITransactionBag } from '@aragon/types';
 
 import { NETWORK_CONFIG, web3Providers, defaultGasPriceFn } from 'core/constants';
 import { Provider } from 'shared/types/models';
@@ -219,13 +219,13 @@ interface ISubscribeWrapperHandlers {
   onApps(apps: IFrontendAragonApp[]): void;
   onPermissions(perms: IAragonPermissions): void;
   onForwarders(apps: IAragonApp[]): void;
-  onTransaction(transactionsBag: ITransactionsBag): void;
+  onTransactionBag(transactionsBag: ITransactionBag): void;
 }
 
 // Subscribe to aragon.js observables
 const subscribe = (
   wrapper: AragonWrapper,
-  { onApps, onPermissions, onForwarders, onTransaction }: ISubscribeWrapperHandlers,
+  { onApps, onPermissions, onForwarders, onTransactionBag }: ISubscribeWrapperHandlers,
   { ipfsConf }: { ipfsConf: IpfsConfig },
 ) => {
   const { apps, permissions, forwarders, transactions } = wrapper;
@@ -245,7 +245,7 @@ const subscribe = (
     connectedApp: null as (Subscription | null),
     connectedWorkers: workerSubscriptionPool,
     forwarders: forwarders.subscribe(onForwarders),
-    transactions: transactions.subscribe(onTransaction),
+    transactions: transactions.subscribe(onTransactionBag),
     workers: apps.subscribe(nextApps => {
       // Asynchronously launch webworkers for each new app that has a background
       // script defined
@@ -330,7 +330,7 @@ interface IInitWrapperOptions {
   onApps?(apps: IFrontendAragonApp[]): void;
   onPermissions?(perms: IAragonPermissions): void;
   onForwarders?(apps: IAragonApp[]): void;
-  onTransactionBag?(transactionBag: ITransactionsBag): void;
+  onTransactionBag?(transactionBag: ITransactionBag): void;
   onDaoAddress?(dao: { address: string, domain: string }): void;
 }
 
@@ -340,7 +340,7 @@ const initWrapper = async (
     onApps = noop,
     onPermissions = noop,
     onForwarders = noop,
-    onTransactionBag: onTransaction = noop,
+    onTransactionBag = noop,
     onDaoAddress = noop,
   }: IInitWrapperOptions,
 ): Promise<AragonWrapper> => {
@@ -393,7 +393,7 @@ const initWrapper = async (
 
   const subscriptions = subscribe(
     wrapper,
-    { onApps, onPermissions, onForwarders, onTransaction },
+    { onApps, onPermissions, onForwarders, onTransactionBag },
     { ipfsConf },
   );
 

@@ -8,7 +8,7 @@ import { Alert } from 'shared/view/elements/Icons';
 interface IOwnProps {
   title: string;
   open: boolean;
-  actions: Array<React.ReactElement<any>>;
+  actions?: Array<React.ReactElement<any>>;
   hint?: string;
 
   onClose(): void;
@@ -19,7 +19,7 @@ type IProps = IOwnProps & StylesProps & ITranslateProps;
 class DrawerModal extends React.Component<IProps> {
   public render() {
     const {
-      classes, t, children, onClose, open, actions, hint, title,
+      classes, t, children, onClose, open, actions = [], hint, title,
     } = this.props;
 
     return (

@@ -15,4 +15,7 @@ export { default as ContentCopy } from './ContentCopy';
 export { default as QrCode } from './QrCode';
 export { default as CircleArrow } from './CircleArrow';
 export { default as Alert } from './Alert';
+export { default as TransactionError } from './TransactionError';
+export { default as TransactionSuccess } from './TransactionSuccess';
+export { default as TransactionPending } from './TransactionPending';
 export { default as HomeOutlinedIcon } from '@material-ui/icons/HomeOutlined';

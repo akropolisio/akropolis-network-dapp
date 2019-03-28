@@ -112,7 +112,7 @@ declare module '@aragon/types' {
   type PermissionRole = string;
 
   export type IAragonPermissions = {
-    [A in Address] : {
+    [A in Address]: {
       [R in PermissionRole]: {
         manager: Address;
         allowedEntities: Address[];
@@ -122,7 +122,7 @@ declare module '@aragon/types' {
 
   export interface ITransactionBag {
     transaction: ITransaction;
-    path?: ITransaction[] | null;
+    path: ITransaction[];
     accept(txHash: string): void;
     reject(error: any): void;
   }
@@ -131,16 +131,23 @@ declare module '@aragon/types' {
     from: string;
     to: string;
     data: string;
-    gas?: number | null;
-    gasPrice?: string | null;
+    gas?: number;
+    gasPrice?: string;
     description: string;
     name: string;
     identifier: string;
+    pretransaction?: ITransaction;
     annotatedDescription?: IAnnotatedDescriptionEntity[] | null;
   }
 
-  export interface IAnnotatedDescriptionEntity {
-    type: string;
-    value: string;
+  export type IAnnotatedDescriptionEntity =
+    | IDesc<'address', string>
+    | IDesc<'app', { proxyAddress: string; name: string; }>
+    | IDesc<'role', { name: string; }>
+    | IDesc<'text', string>;
+
+  interface IDesc<T extends string, V> {
+    type: T;
+    value: V;
   }
 }

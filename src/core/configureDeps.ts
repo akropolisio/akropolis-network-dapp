@@ -21,7 +21,7 @@ export default function configureDeps(_store: Store<IAppReduxState>): IDependenc
   const storage = new LocalStorage('v1');
 
   const providerEngine = new Web3ProviderEngine();
-  providerEngine.addProvider(new MetamaskSubprovider(web3Providers.wallet));
+  providerEngine.addProvider(new MetamaskSubprovider(web3Providers.wallet as any));
   providerEngine.addProvider(new RPCSubprovider(NETWORK_CONFIG.rpcUrl));
   providerEngine.start();
 
