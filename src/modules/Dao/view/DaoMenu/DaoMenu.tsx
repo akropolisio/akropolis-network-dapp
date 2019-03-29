@@ -18,6 +18,9 @@ interface IProps {
   routeParams: {
     daoName: string;
   };
+  notificationsCount: number;
+  isNotificationsOpened: boolean;
+  onNotificationClicked(): void;
 }
 
 function DaoMenu(props: IProps & StylesProps) {

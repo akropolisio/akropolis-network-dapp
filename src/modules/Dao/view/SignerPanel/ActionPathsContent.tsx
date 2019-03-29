@@ -9,7 +9,7 @@ import getProviderString from 'shared/helpers/providerStrings';
 
 import SignerButton from './SignerButton';
 import AddressLink from './AddressLink';
-import { IIntent } from './types';
+import { IIntent } from '../types';
 
 const RADIO_ITEM_TITLE_LENGTH = 30;
 

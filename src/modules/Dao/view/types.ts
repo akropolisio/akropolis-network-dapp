@@ -7,3 +7,10 @@ export interface IIntent {
   to: string;
   transaction: ITransaction;
 }
+
+export interface INotification {
+  id: string;
+  type: string;
+  title: string;
+  content: string;
+}

@@ -9,7 +9,7 @@ import { addressesEqual, getInjectedProvider } from 'shared/helpers/web3';
 
 import ConfirmTransaction from './ConfirmTransaction';
 import SigningStatus from './SigningStatus';
-import { IIntent } from './types';
+import { IIntent } from '../types';
 
 interface IProps {
   apps: IFrontendAragonApp[];

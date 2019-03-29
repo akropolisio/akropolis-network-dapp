@@ -8,7 +8,7 @@ import { isElectron } from 'shared/helpers/utils';
 import ActionPathsContent from './ActionPathsContent';
 import SignerButton from './SignerButton';
 import AddressLink from './AddressLink';
-import { IIntent } from './types';
+import { IIntent } from '../types';
 
 interface IProps {
   direct: boolean;

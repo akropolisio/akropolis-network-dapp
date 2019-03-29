@@ -12,13 +12,8 @@ import DaoMenu from '../DaoMenu/DaoMenu';
 import DaoContent from '../DaoContent/DaoContent';
 import SignerPanel from '../SignerPanel/SignerPanel';
 import { StylesProps, provideStyles } from './DaoMain.style';
-
-interface INotification {
-  id: string;
-  type: string;
-  title: string;
-  content: string;
-}
+import NotificationBar from '../Notifications/NotificationBar';
+import { INotification } from '../types';
 
 function DaoMain(props: RouteComponentProps<{ daoName: string, appName: string }> & StylesProps) {
   const { classes, match } = props;
@@ -29,6 +24,7 @@ function DaoMain(props: RouteComponentProps<{ daoName: string, appName: string }
 
   const [queuedNotifications, setQueuedNotifications] = React.useState<INotification[]>([]);
   const [notifications, setNotifications] = React.useState<INotification[]>([]);
+  const [isNotificationsOpened, setIsNotificationsOpened] = React.useState(false);
 
   const onRequestEnable = React.useCallback(() => {
     const provider = web3Providers.wallet;
@@ -48,6 +44,17 @@ function DaoMain(props: RouteComponentProps<{ daoName: string, appName: string }
     }
   }, []);
 
+  const handleNotificationsCleared = React.useCallback(() => {
+    setNotifications([]);
+    setQueuedNotifications([]);
+    if (isNotificationsOpened) {
+      setTimeout(
+        () => setIsNotificationsOpened(false),
+        notifications.length ? 500 : 0,
+      );
+    }
+  }, [notifications, isNotificationsOpened]);
+
   const daoProps = useDaoWrapper(daoName);
   const poolProps = usePoolNetwork(daoProps.wrapper);
 
@@ -56,12 +63,23 @@ function DaoMain(props: RouteComponentProps<{ daoName: string, appName: string }
 
   return (
     <BaseLayout fullHeight>
+      <NotificationBar
+        open={isNotificationsOpened}
+        notifications={notifications}
+        onClearAll={handleNotificationsCleared}
+      />
       {status === 'loading' && <Preloader />}
       {status === 'error' && 'Something went wrong'}
       {status === 'ready' && wrapper && (
         <div className={classes.root}>
           <div className={classes.menu}>
-            <DaoMenu routeParams={match.params} apps={apps} />
+            <DaoMenu
+              routeParams={match.params}
+              apps={apps}
+              notificationsCount={notifications.length}
+              onNotificationClicked={setIsNotificationsOpened.bind(null, !isNotificationsOpened)}
+              isNotificationsOpened={isNotificationsOpened}
+            />
           </div>
           <div className={classes.content}>
             <DaoContent appName={match.params.appName} apps={apps} wrapper={wrapper} />

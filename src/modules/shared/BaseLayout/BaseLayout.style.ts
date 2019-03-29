@@ -3,6 +3,7 @@ import { rule } from 'shared/helpers/style';
 
 const styles = (theme: Theme) => ({
   content: rule({
+    position: 'relative',
     display: 'flex',
     maxWidth: theme.extra.sizes.page.maxWidth,
     flexGrow: 1,
